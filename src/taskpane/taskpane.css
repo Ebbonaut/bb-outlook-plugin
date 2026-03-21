@@ -28,22 +28,14 @@ body {
 .header {
   display: flex;
   align-items: center;
-  gap: 10px;
-  padding: 12px 16px;
+  justify-content: center;
+  padding: 14px 16px;
   background: #1a1a1a;
-  color: white;
 }
 
-.header-icon {
-  width: 28px;
-  height: 28px;
-  border-radius: 6px;
-}
-
-.header-title {
-  font-weight: 700;
-  font-size: 14px;
-  letter-spacing: 1.5px;
+.header-logo {
+  height: 24px;
+  width: auto;
 }
 
 /* ===== SECTIONS ===== */
@@ -274,7 +266,7 @@ details[open] .settings-toggle::after {
 .powered-by {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
   text-decoration: none;
   color: inherit;
   transition: opacity 0.15s;
@@ -289,15 +281,7 @@ details[open] .settings-toggle::after {
   color: #a19f9d;
 }
 
-.powered-by-icon {
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-}
-
-.powered-by-brand {
-  font-size: 13px;
-  font-weight: 700;
-  color: #323130;
-  letter-spacing: 1.2px;
+.powered-by-logo {
+  height: 18px;
+  width: auto;
 }
