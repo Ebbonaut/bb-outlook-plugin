@@ -7,11 +7,11 @@
 
   <!-- Grundlegende Metadaten -->
   <Id>a1b2c3d4-e5f6-7890-abcd-ef1234567890</Id>
-  <Version>1.4.0.0</Version>
+  <Version>1.5.0.0</Version>
   <ProviderName>BLOCKBRAIN</ProviderName>
   <DefaultLocale>de-DE</DefaultLocale>
   <DisplayName DefaultValue="BLOCKBRAIN Outlook Plugin" />
-  <Description DefaultValue="BLOCKBRAIN AI generiert automatisch E-Mail-Antworten." />
+  <Description DefaultValue="Generiere professionelle E-Mail-Antworten auf Knopfdruck – powered by BLOCKBRAIN." />
   <IconUrl DefaultValue="https://ebbonaut.github.io/bb-outlook-plugin/assets/icon-64.png" />
   <HighResolutionIconUrl DefaultValue="https://ebbonaut.github.io/bb-outlook-plugin/assets/icon-128.png" />
   <SupportUrl DefaultValue="https://blockbrain.ai" />
