@@ -1,0 +1,167 @@
+/* ===== RESET & BASE ===== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Segoe UI", "Segoe UI Web", -apple-system, BlinkMacSystemFont, sans-serif;
+  background-color: #fafafa;
+  color: #323130;
+  padding: 16px;
+  min-height: 100vh;
+}
+
+/* ===== UTILITY ===== */
+.ms-hidden {
+  display: none !important;
+}
+
+/* ===== APP LAYOUT ===== */
+#app {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-width: 360px;
+  margin: 0 auto;
+}
+
+/* ===== HEADER ===== */
+.app-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #edebe9;
+}
+
+.app-logo {
+  width: 28px;
+  height: 28px;
+}
+
+.app-header h1 {
+  color: #0078d4;
+  font-size: 16px;
+}
+
+/* ===== STATUS BEREICH ===== */
+.status-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 24px 16px;
+  background: #f3f2f1;
+  border-radius: 8px;
+}
+
+.status-text {
+  text-align: center;
+  color: #605e5c;
+}
+
+/* ===== SPINNER ===== */
+.spinner {
+  width: 32px;
+  height: 32px;
+  border: 3px solid #edebe9;
+  border-top-color: #0078d4;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Status-Icon Zustände */
+.status-icon.success .spinner {
+  display: none;
+}
+
+.status-icon.error .spinner {
+  display: none;
+}
+
+.status-icon.success::after {
+  content: "✅";
+  font-size: 28px;
+}
+
+.status-icon.error::after {
+  content: "❌";
+  font-size: 28px;
+}
+
+/* ===== BUTTONS ===== */
+.actions-section {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.action-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  font-family: inherit;
+}
+
+.action-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+}
+
+.action-btn:active {
+  transform: translateY(0);
+}
+
+.action-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.btn-icon {
+  font-size: 16px;
+}
+
+/* Primärer Button (Generieren) */
+.primary-btn {
+  background-color: #0078d4;
+  color: white;
+}
+
+.primary-btn:hover {
+  background-color: #106ebe;
+}
+
+/* Erfolgs-Button (Draft öffnen) */
+.success-btn {
+  background-color: #107c10;
+  color: white;
+}
+
+.success-btn:hover {
+  background-color: #0b6a0b;
+}
+
+/* ===== FOOTER ===== */
+.app-footer {
+  text-align: center;
+  padding-top: 12px;
+  border-top: 1px solid #edebe9;
+}

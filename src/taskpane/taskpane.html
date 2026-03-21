@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BB Draft</title>
+
+  <!-- Office.js -->
+  <script src="https://appsforoffice.microsoft.com/lib/1/hosted/office.js" type="text/javascript"></script>
+
+  <!-- Fluent UI (Microsoft Design) -->
+  <link rel="stylesheet"
+        href="https://static2.sharepointonline.com/files/fabric/office-ui-fabric-core/11.1.0/css/fabric.min.css" />
+</head>
+<body class="ms-Fabric" dir="ltr">
+  <div id="app">
+    <!-- Header -->
+    <header class="app-header">
+      <img src="assets/icon-32.png" alt="BB" class="app-logo" />
+      <h1 class="ms-font-l ms-fontWeight-semibold">BlockBrain Draft</h1>
+    </header>
+
+    <!-- Status-Bereich -->
+    <section id="status-section" class="status-section ms-hidden">
+      <div class="status-icon" id="status-icon">
+        <div class="spinner"></div>
+      </div>
+      <p class="ms-font-m status-text" id="status-text">KI generiert Antwort...</p>
+    </section>
+
+    <!-- Aktions-Buttons -->
+    <section id="actions" class="actions-section">
+      <button id="btn-generate" class="action-btn primary-btn">
+        <span class="btn-icon">✨</span>
+        <span>Antwort generieren</span>
+      </button>
+
+      <button id="btn-open-draft" class="action-btn success-btn ms-hidden">
+        <span class="btn-icon">📨</span>
+        <span>Entwurf öffnen</span>
+      </button>
+    </section>
+
+    <!-- Info -->
+    <footer class="app-footer">
+      <p class="ms-font-xs ms-fontColor-neutralSecondary">Powered by BlockBrain AI</p>
+    </footer>
+  </div>
+</body>
+</html>
