@@ -1,7 +1,6 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
-const Dotenv = require("dotenv-webpack");
 
 const devCerts = require("office-addin-dev-certs");
 
@@ -11,6 +10,7 @@ module.exports = async (env, options) => {
     devtool: dev ? "source-map" : false,
     entry: {
       taskpane: "./src/taskpane/taskpane.js",
+      commands: "./src/commands/commands.js",
     },
     output: {
       path: path.resolve(__dirname, "dist"),
@@ -44,14 +44,16 @@ module.exports = async (env, options) => {
         template: "./src/taskpane/taskpane.html",
         chunks: ["taskpane"],
       }),
+      new HtmlWebpackPlugin({
+        filename: "commands.html",
+        template: "./src/commands/commands.html",
+        chunks: ["commands"],
+      }),
       new CopyWebpackPlugin({
         patterns: [
           { from: "assets", to: "assets" },
           { from: "manifest.xml", to: "manifest.xml" },
         ],
-      }),
-      new Dotenv({
-        systemvars: true,
       }),
     ],
   };

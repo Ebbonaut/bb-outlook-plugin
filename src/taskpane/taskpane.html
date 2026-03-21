@@ -4,47 +4,84 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>BB Draft</title>
-
-  <!-- Office.js -->
   <script src="https://appsforoffice.microsoft.com/lib/1/hosted/office.js" type="text/javascript"></script>
-
-  <!-- Fluent UI (Microsoft Design) -->
-  <link rel="stylesheet"
-        href="https://static2.sharepointonline.com/files/fabric/office-ui-fabric-core/11.1.0/css/fabric.min.css" />
 </head>
-<body class="ms-Fabric" dir="ltr">
+<body>
   <div id="app">
-    <!-- Header -->
-    <header class="app-header">
-      <img src="assets/icon-32.png" alt="BB" class="app-logo" />
-      <h1 class="ms-font-l ms-fontWeight-semibold">BlockBrain Draft</h1>
+
+    <!-- ========== HEADER ========== -->
+    <header class="header">
+      <span class="header-logo">BB</span>
+      <span class="header-title">BlockBrain Draft</span>
     </header>
 
-    <!-- Status-Bereich -->
-    <section id="status-section" class="status-section ms-hidden">
-      <div class="status-icon" id="status-icon">
-        <div class="spinner"></div>
+    <!-- ========== DRAFT SECTION ========== -->
+    <section class="section draft-section">
+      <label class="label" for="hints">Zusätzliche Hinweise <span class="optional">(optional)</span></label>
+      <textarea id="hints" class="textarea" rows="3"
+        placeholder="z.B. &quot;Antworte freundlich aber bestimmt&quot; oder &quot;Frage nach der Bestellnummer&quot;"></textarea>
+
+      <button id="btn-generate" class="btn btn-primary">
+        <span id="btn-icon">✨</span>
+        <span id="btn-text">Antwort generieren</span>
+      </button>
+
+      <!-- Status-Anzeige (versteckt bis Klick) -->
+      <div id="status" class="status hidden">
+        <div class="spinner" id="spinner"></div>
+        <p id="status-text">Generiere Antwort...</p>
       </div>
-      <p class="ms-font-m status-text" id="status-text">KI generiert Antwort...</p>
+
+      <!-- Ergebnis-Bereich (versteckt bis Antwort da) -->
+      <div id="result" class="result-section hidden">
+        <label class="label">Generierter Entwurf</label>
+        <textarea id="draft-text" class="textarea draft-textarea" rows="8" readonly></textarea>
+        <div class="result-actions">
+          <button id="btn-open-reply" class="btn btn-primary">
+            <span>📧</span> <span>Reply öffnen</span>
+          </button>
+          <button id="btn-copy" class="btn btn-secondary">
+            <span>📋</span> <span id="copy-text">Kopieren</span>
+          </button>
+        </div>
+      </div>
     </section>
 
-    <!-- Aktions-Buttons -->
-    <section id="actions" class="actions-section">
-      <button id="btn-generate" class="action-btn primary-btn">
-        <span class="btn-icon">✨</span>
-        <span>Antwort generieren</span>
-      </button>
+    <!-- ========== SETTINGS SECTION ========== -->
+    <details class="section settings-section" id="settings-details">
+      <summary class="settings-toggle">
+        <span class="settings-icon">⚙️</span> Einstellungen
+      </summary>
 
-      <button id="btn-open-draft" class="action-btn success-btn ms-hidden">
-        <span class="btn-icon">📨</span>
-        <span>Entwurf öffnen</span>
-      </button>
-    </section>
+      <div class="settings-body">
+        <div class="field">
+          <label class="label" for="cfg-url">API URL</label>
+          <input id="cfg-url" class="input" type="url" placeholder="https://blocky.qa.theblockbrain.io" />
+        </div>
 
-    <!-- Info -->
-    <footer class="app-footer">
-      <p class="ms-font-xs ms-fontColor-neutralSecondary">Powered by BlockBrain AI</p>
+        <div class="field">
+          <label class="label" for="cfg-token">Bearer Token</label>
+          <input id="cfg-token" class="input" type="password" placeholder="Token eingeben..." />
+        </div>
+
+        <div class="field">
+          <label class="label" for="cfg-bot">Bot ID</label>
+          <input id="cfg-bot" class="input" type="text" placeholder="Bot ID eingeben..." />
+        </div>
+
+        <button id="btn-save" class="btn btn-secondary">
+          💾 Einstellungen speichern
+        </button>
+
+        <p id="save-status" class="save-status hidden">✅ Gespeichert</p>
+      </div>
+    </details>
+
+    <!-- ========== FOOTER ========== -->
+    <footer class="footer">
+      Powered by BlockBrain AI
     </footer>
+
   </div>
 </body>
 </html>

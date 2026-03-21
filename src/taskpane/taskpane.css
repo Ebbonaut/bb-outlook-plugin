@@ -1,4 +1,4 @@
-/* ===== RESET & BASE ===== */
+/* ===== BB Draft Sidebar ===== */
 * {
   margin: 0;
   padding: 0;
@@ -6,162 +6,270 @@
 }
 
 body {
-  font-family: "Segoe UI", "Segoe UI Web", -apple-system, BlinkMacSystemFont, sans-serif;
-  background-color: #fafafa;
+  font-family: "Segoe UI", -apple-system, BlinkMacSystemFont, sans-serif;
+  background: #fafafa;
   color: #323130;
-  padding: 16px;
-  min-height: 100vh;
+  font-size: 13px;
+  line-height: 1.4;
 }
 
-/* ===== UTILITY ===== */
-.ms-hidden {
+.hidden {
   display: none !important;
 }
 
-/* ===== APP LAYOUT ===== */
+/* ===== LAYOUT ===== */
 #app {
   display: flex;
   flex-direction: column;
-  gap: 20px;
-  max-width: 360px;
-  margin: 0 auto;
+  min-height: 100vh;
 }
 
 /* ===== HEADER ===== */
-.app-header {
+.header {
   display: flex;
   align-items: center;
-  gap: 10px;
-  padding-bottom: 12px;
+  gap: 8px;
+  padding: 12px 16px;
+  background: #0078d4;
+  color: white;
+}
+
+.header-logo {
+  font-weight: 800;
+  font-size: 15px;
+  background: rgba(255,255,255,0.2);
+  border-radius: 4px;
+  padding: 2px 6px;
+  letter-spacing: 0.5px;
+}
+
+.header-title {
+  font-weight: 600;
+  font-size: 14px;
+}
+
+/* ===== SECTIONS ===== */
+.section {
+  padding: 16px;
+}
+
+.draft-section {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
   border-bottom: 1px solid #edebe9;
 }
 
-.app-logo {
-  width: 28px;
-  height: 28px;
+/* ===== FORM ELEMENTS ===== */
+.label {
+  font-size: 12px;
+  font-weight: 600;
+  color: #323130;
+  display: block;
+  margin-bottom: 4px;
 }
 
-.app-header h1 {
-  color: #0078d4;
-  font-size: 16px;
+.optional {
+  font-weight: 400;
+  color: #a19f9d;
 }
 
-/* ===== STATUS BEREICH ===== */
-.status-section {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 12px;
-  padding: 24px 16px;
-  background: #f3f2f1;
-  border-radius: 8px;
+.textarea,
+.input {
+  width: 100%;
+  padding: 8px 10px;
+  border: 1px solid #c8c6c4;
+  border-radius: 4px;
+  font-family: inherit;
+  font-size: 13px;
+  color: #323130;
+  background: #fff;
+  transition: border-color 0.15s;
+  outline: none;
 }
 
-.status-text {
-  text-align: center;
-  color: #605e5c;
+.textarea:focus,
+.input:focus {
+  border-color: #0078d4;
+  box-shadow: 0 0 0 1px #0078d4;
 }
 
-/* ===== SPINNER ===== */
-.spinner {
-  width: 32px;
-  height: 32px;
-  border: 3px solid #edebe9;
-  border-top-color: #0078d4;
-  border-radius: 50%;
-  animation: spin 0.8s linear infinite;
+.textarea {
+  resize: vertical;
+  min-height: 60px;
 }
 
-@keyframes spin {
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-/* Status-Icon Zustände */
-.status-icon.success .spinner {
-  display: none;
-}
-
-.status-icon.error .spinner {
-  display: none;
-}
-
-.status-icon.success::after {
-  content: "✅";
-  font-size: 28px;
-}
-
-.status-icon.error::after {
-  content: "❌";
-  font-size: 28px;
+.textarea::placeholder,
+.input::placeholder {
+  color: #a19f9d;
 }
 
 /* ===== BUTTONS ===== */
-.actions-section {
+.btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  width: 100%;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 4px;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s, opacity 0.15s;
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btn-primary {
+  background: #0078d4;
+  color: white;
+}
+
+.btn-primary:hover:not(:disabled) {
+  background: #106ebe;
+}
+
+.btn-secondary {
+  background: #f3f2f1;
+  color: #323130;
+  border: 1px solid #c8c6c4;
+}
+
+.btn-secondary:hover:not(:disabled) {
+  background: #e1dfdd;
+}
+
+/* ===== STATUS ===== */
+.status {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  background: #f3f2f1;
+  border-radius: 4px;
+}
+
+#status-text {
+  font-size: 12px;
+  color: #605e5c;
+}
+
+.spinner {
+  width: 18px;
+  height: 18px;
+  border: 2px solid #edebe9;
+  border-top-color: #0078d4;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+  flex-shrink: 0;
+}
+
+.spinner.done {
+  display: none;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ===== RESULT SECTION ===== */
+.result-section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 4px;
+  padding-top: 12px;
+  border-top: 1px solid #edebe9;
+}
+
+.draft-textarea {
+  min-height: 120px;
+  background: #f9f9f9;
+  font-size: 12px;
+  line-height: 1.5;
+  color: #323130;
+}
+
+.result-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.result-actions .btn {
+  flex: 1;
+  padding: 8px 12px;
+  font-size: 12px;
+}
+
+/* ===== SETTINGS ===== */
+.settings-section {
+  padding: 0;
+  border-top: 1px solid #edebe9;
+}
+
+.settings-toggle {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 12px 16px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #605e5c;
+  cursor: pointer;
+  user-select: none;
+  list-style: none;
+}
+
+.settings-toggle::-webkit-details-marker {
+  display: none;
+}
+
+.settings-toggle::after {
+  content: "›";
+  margin-left: auto;
+  font-size: 16px;
+  transition: transform 0.2s;
+}
+
+details[open] .settings-toggle::after {
+  transform: rotate(90deg);
+}
+
+.settings-icon {
+  font-size: 14px;
+}
+
+.settings-body {
+  padding: 0 16px 16px;
   display: flex;
   flex-direction: column;
   gap: 10px;
 }
 
-.action-btn {
+.field {
   display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  padding: 12px 20px;
-  border: none;
-  border-radius: 6px;
-  font-size: 14px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.15s ease;
-  font-family: inherit;
+  flex-direction: column;
 }
 
-.action-btn:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
-}
-
-.action-btn:active {
-  transform: translateY(0);
-}
-
-.action-btn:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-  transform: none;
-  box-shadow: none;
-}
-
-.btn-icon {
-  font-size: 16px;
-}
-
-/* Primärer Button (Generieren) */
-.primary-btn {
-  background-color: #0078d4;
-  color: white;
-}
-
-.primary-btn:hover {
-  background-color: #106ebe;
-}
-
-/* Erfolgs-Button (Draft öffnen) */
-.success-btn {
-  background-color: #107c10;
-  color: white;
-}
-
-.success-btn:hover {
-  background-color: #0b6a0b;
+.save-status {
+  text-align: center;
+  font-size: 12px;
+  color: #107c10;
+  padding: 4px 0;
 }
 
 /* ===== FOOTER ===== */
-.app-footer {
+.footer {
   text-align: center;
-  padding-top: 12px;
+  padding: 10px 16px;
+  font-size: 11px;
+  color: #a19f9d;
   border-top: 1px solid #edebe9;
 }
