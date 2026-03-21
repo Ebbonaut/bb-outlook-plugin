@@ -171,9 +171,6 @@ prompt +=
 
       spinnerEl.className = "spinner done";
       statusText.innerText = "✅ Antwort generiert!";
-
-      // 6. Versuche Reply-Form automatisch zu öffnen
-      tryOpenReply();
     } else {
       spinnerEl.className = "spinner done";
       statusText.innerText = "❌ Keine Antwort von der KI erhalten.";
