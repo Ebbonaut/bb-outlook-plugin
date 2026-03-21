@@ -10,7 +10,7 @@
   <Version>1.5.0.0</Version>
   <ProviderName>BLOCKBRAIN</ProviderName>
   <DefaultLocale>de-DE</DefaultLocale>
-  <DisplayName DefaultValue="BLOCKBRAIN Outlook Plugin" />
+  <DisplayName DefaultValue="BLOCKBRAIN" />
   <Description DefaultValue="Generiere professionelle E-Mail-Antworten auf Knopfdruck – powered by BLOCKBRAIN." />
   <IconUrl DefaultValue="https://ebbonaut.github.io/bb-outlook-plugin/assets/icon-64.png" />
   <HighResolutionIconUrl DefaultValue="https://ebbonaut.github.io/bb-outlook-plugin/assets/icon-128.png" />
