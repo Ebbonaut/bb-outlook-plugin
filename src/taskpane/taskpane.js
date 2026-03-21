@@ -131,26 +131,26 @@ async function handleGenerate() {
 
     // 2. Prompt bauen
     var prompt =
-      "Analysiere den folgenden E-Mail-Verlauf. Identifiziere die ZULETZT eingegangene Nachricht und wer der Absender war.\n" +
-      "DEINE ROLLE: Du bist der Empfänger dieser letzten Nachricht. Antworte in seinem Namen professionell und passend auf den Inhalt.\n\n" +
-      "AUSGABE-REGELN:\n" +
-      "- NUR den reinen Antworttext ausgeben.\n" +
-      '- Kein Markdown, keine Einleitung (wie "Hier ist die Antwort:"), keine Metadaten.\n' +
-      "- Sprache: Deutsch (oder die Sprache der Mail).\n" +
-      "- Falls die letzte Nachricht vom Kundenservice kam, antworte als Kunde. Falls sie von einem Kunden kam, antworte als Service.\n\n";
+  "Analysiere den folgenden E-Mail-Verlauf. Identifiziere die ZULETZT eingegangene Nachricht " +
+  "sowie deren Absender und Kontext (z.B. privat, geschäftlich, Chef, Kollege, Kunde, Partner, Freund).\n\n" +
+  "DEINE ROLLE: Du bist der Empfänger der letzten Nachricht. Verfasse eine passende Antwort in seinem Namen.\n\n" +
+  "AUSGABE-REGELN:\n" +
+  "- NUR den reinen Antworttext ausgeben – keine Einleitung, kein Markdown, keine Metadaten.\n" +
+  "- Ton und Stil passen sich automatisch dem Kontext an.\n" +
+  "- Sprache: die Sprache der zuletzt eingegangenen Mail.\n" +
+  "- Antworte inhaltlich auf alle angesprochenen Punkte.\n\n";
 
-    // Optionale Hinweise einfügen
-    if (hints) {
-      prompt += "ZUSÄTZLICHE HINWEISE VOM BENUTZER:\n" + hints + "\n\n";
-    }
+if (hints) {
+  prompt += "ZUSÄTZLICHE HINWEISE VOM BENUTZER:\n" + hints + "\n\n";
+}
 
-    prompt +=
-      "MAIL-VERLAUF:\n" +
-      "Betreff: " + item.subject + "\n" +
-      "Inhalt: " + bodyText;
+prompt +=
+  "MAIL-VERLAUF:\n" +
+  "Betreff: " + item.subject + "\n" +
+  "Inhalt: " + bodyText;
 
     // 3. Neue Konversation erstellen
-    statusText.innerText = "Verbinde mit BlockBrain...";
+    statusText.innerText = "Verbinde mit BLOCKBRAIN...";
     var convoData = await createConvo(settings.bbUrl, settings.bbToken, settings.bbBotId);
     var convoId = convoData.body.dataRoomId;
 
