@@ -12,8 +12,8 @@
   <DefaultLocale>de-DE</DefaultLocale>
   <DisplayName DefaultValue="BB Draft" />
   <Description DefaultValue="BlockBrain AI generiert automatisch E-Mail-Antworten." />
-  <IconUrl DefaultValue="https://DEIN-USERNAME.github.io/bb-outlook-plugin/assets/icon-64.png" />
-  <HighResolutionIconUrl DefaultValue="https://DEIN-USERNAME.github.io/bb-outlook-plugin/assets/icon-128.png" />
+  <IconUrl DefaultValue="https://ebbonaut.github.io/bb-outlook-plugin/assets/icon-64.png" />
+  <HighResolutionIconUrl DefaultValue="https://ebbonaut.github.io/bb-outlook-plugin/assets/icon-128.png" />
   <SupportUrl DefaultValue="https://theblockbrain.io" />
 
   <!-- Outlook-Anforderungen -->
@@ -31,7 +31,7 @@
   <FormSettings>
     <Form xsi:type="ItemRead">
       <DesktopSettings>
-        <SourceLocation DefaultValue="https://DEIN-USERNAME.github.io/bb-outlook-plugin/taskpane.html" />
+        <SourceLocation DefaultValue="https://ebbonaut.github.io/bb-outlook-plugin/taskpane.html" />
         <RequestedHeight>250</RequestedHeight>
       </DesktopSettings>
     </Form>
@@ -89,13 +89,13 @@
     <!-- Ressourcen -->
     <Resources>
       <bt:Images>
-        <bt:Image id="Icon.16x16" DefaultValue="https://DEIN-USERNAME.github.io/bb-outlook-plugin/assets/icon-16.png" />
-        <bt:Image id="Icon.32x32" DefaultValue="https://DEIN-USERNAME.github.io/bb-outlook-plugin/assets/icon-32.png" />
-        <bt:Image id="Icon.80x80" DefaultValue="https://DEIN-USERNAME.github.io/bb-outlook-plugin/assets/icon-80.png" />
+        <bt:Image id="Icon.16x16" DefaultValue="https://ebbonaut.github.io/bb-outlook-plugin/assets/icon-16.png" />
+        <bt:Image id="Icon.32x32" DefaultValue="https://ebbonaut.github.io/bb-outlook-plugin/assets/icon-32.png" />
+        <bt:Image id="Icon.80x80" DefaultValue="https://ebbonaut.github.io/bb-outlook-plugin/assets/icon-80.png" />
       </bt:Images>
 
       <bt:Urls>
-        <bt:Url id="Taskpane.Url" DefaultValue="https://DEIN-USERNAME.github.io/bb-outlook-plugin/taskpane.html" />
+        <bt:Url id="Taskpane.Url" DefaultValue="https://ebbonaut.github.io/bb-outlook-plugin/taskpane.html" />
       </bt:Urls>
 
       <bt:ShortStrings>
