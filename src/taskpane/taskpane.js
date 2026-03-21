@@ -136,9 +136,12 @@ async function handleGenerate() {
   "DEINE ROLLE: Du bist der Empfänger der letzten Nachricht. Verfasse eine passende Antwort in seinem Namen.\n\n" +
   "AUSGABE-REGELN:\n" +
   "- NUR den reinen Antworttext ausgeben – keine Einleitung, kein Markdown, keine Metadaten.\n" +
+  "- Die Antwort MUSS folgende Struktur haben:\n" +
+  "  1. Anrede (z.B. 'Sehr geehrter Herr/Frau ...', 'Lieber ...', 'Hallo ...', 'Hi ...' – passend zum Kontext und Tonalität der E-Mail)\n" +
+  "  2. Inhalt der Antwort (auf alle angesprochenen Punkte eingehen)\n" +
+  "  3. Grußformel mit Name (z.B. 'Mit freundlichen Grüßen', 'Beste Grüße', 'Viele Grüße' – passend zum Kontext)\n" +
   "- Ton und Stil passen sich automatisch dem Kontext an.\n" +
-  "- Sprache: die Sprache der zuletzt eingegangenen Mail.\n" +
-  "- Antworte inhaltlich auf alle angesprochenen Punkte.\n\n";
+  "- Sprache: die Sprache der zuletzt eingegangenen Mail.\n\n";
 
 if (hints) {
   prompt += "ZUSÄTZLICHE HINWEISE VOM BENUTZER:\n" + hints + "\n\n";
