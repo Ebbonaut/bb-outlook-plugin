@@ -2,7 +2,7 @@ import "./taskpane.css";
 
 /* global Office */
 
-// --- DEFAULTS (Fallback wenn nichts in localStorage) ---
+// --- DEFAULTS (fallback if nothing in localStorage) ---
 var DEFAULTS = {
   bbUrl: "https://blocky.theblockbrain.ai",
   bbToken: "",
@@ -10,7 +10,7 @@ var DEFAULTS = {
   useSystemPrompt: false,
 };
 
-// --- SETTINGS aus localStorage laden ---
+// --- LOAD SETTINGS from localStorage ---
 function loadSettings() {
   try {
     var saved = localStorage.getItem("bb_settings");
@@ -44,7 +44,7 @@ function saveSettings(url, token, botId, useSystemPrompt) {
   localStorage.setItem("bb_settings", JSON.stringify(settings));
 }
 
-// --- OFFICE INITIALISIERUNG ---
+// --- OFFICE INITIALIZATION ---
 Office.onReady(function (info) {
   if (info.host === Office.HostType.Outlook) {
     initUI();
@@ -52,14 +52,14 @@ Office.onReady(function (info) {
 });
 
 function initUI() {
-  // Settings-Felder befüllen
+  // Populate settings fields
   var settings = loadSettings();
   document.getElementById("cfg-url").value = settings.bbUrl;
   document.getElementById("cfg-token").value = settings.bbToken;
   document.getElementById("cfg-bot").value = settings.bbBotId;
   document.getElementById("cfg-system-prompt").checked = settings.useSystemPrompt;
 
-  // Wenn Token oder Bot ID leer → Settings automatisch öffnen
+  // If token or bot ID empty → auto-open settings
   if (!settings.bbToken || !settings.bbBotId) {
     document.getElementById("settings-details").open = true;
   }
@@ -71,7 +71,7 @@ function initUI() {
   document.getElementById("btn-open-reply").addEventListener("click", handleOpenReply);
 }
 
-// --- SETTINGS SPEICHERN ---
+// --- SAVE SETTINGS ---
 function handleSave() {
   var url = document.getElementById("cfg-url").value.trim();
   var token = document.getElementById("cfg-token").value.trim();
@@ -80,7 +80,7 @@ function handleSave() {
 
   saveSettings(url, token, botId, useSystemPrompt);
 
-  // Kurz "Gespeichert" anzeigen
+  // Briefly show "Saved" status
   var statusEl = document.getElementById("save-status");
   statusEl.classList.remove("hidden");
   setTimeout(function () {
@@ -88,14 +88,14 @@ function handleSave() {
   }, 2000);
 }
 
-// --- Gespeicherter Draft für Reply ---
+// --- Stored draft for reply ---
 var lastDraftHtml = "";
 
-// --- DRAFT GENERIEREN ---
+// --- GENERATE DRAFT ---
 async function handleGenerate() {
   var settings = loadSettings();
 
-  // Validierung
+  // Validation
   if (!settings.bbToken || !settings.bbBotId) {
     document.getElementById("settings-details").open = true;
     if (!settings.bbToken) {
@@ -116,88 +116,88 @@ async function handleGenerate() {
   var draftTextEl = document.getElementById("draft-text");
   var hints = document.getElementById("hints").value.trim();
 
-  // Ergebnis-Bereich verstecken bei neuer Generierung
+  // Hide result section on new generation
   resultEl.classList.add("hidden");
   lastDraftHtml = "";
 
-  // UI: Lade-Zustand
+  // UI: loading state
   btnGenerate.disabled = true;
   btnIcon.innerText = "⏳";
-  btnText.innerText = "Wird generiert...";
+  btnText.innerText = "Generating...";
   statusEl.classList.remove("hidden");
   spinnerEl.className = "spinner";
-  statusText.innerText = "Lese E-Mail...";
+  statusText.innerText = "Reading email...";
 
   try {
     var item = Office.context.mailbox.item;
 
-    // 1. Mail-Body lesen
+    // 1. Read mail body
     var bodyText = await getMailBody(item);
-    statusText.innerText = "Bot generiert Antwort...";
+    statusText.innerText = "Bot is generating reply...";
 
-    // 2. Prompt bauen
+    // 2. Build prompt
     var prompt = "";
 
     if (settings.useSystemPrompt) {
       prompt +=
-        "Analysiere den folgenden E-Mail-Verlauf. Identifiziere die ZULETZT eingegangene Nachricht " +
-        "sowie deren Absender und Kontext (z.B. privat, geschäftlich, Chef, Kollege, Kunde, Partner, Freund).\n\n" +
-        "DEINE ROLLE: Du bist der Empfänger der letzten Nachricht. Verfasse eine passende Antwort in seinem Namen.\n\n" +
-        "AUSGABE-REGELN:\n" +
-        "- NUR den reinen Antworttext ausgeben – keine Einleitung, kein Markdown, keine Metadaten.\n" +
-        "- Die Antwort MUSS folgende Struktur haben:\n" +
-        "  1. Anrede (z.B. 'Sehr geehrter Herr/Frau ...', 'Lieber ...', 'Hallo ...', 'Hi ...' – passend zum Kontext und Tonalität der E-Mail)\n" +
-        "  2. Inhalt der Antwort (auf alle angesprochenen Punkte eingehen)\n" +
-        "  3. Grußformel mit Name (z.B. 'Mit freundlichen Grüßen', 'Beste Grüße', 'Viele Grüße' – passend zum Kontext)\n" +
-        "- Ton und Stil passen sich automatisch dem Kontext an.\n" +
-        "- Sprache: die Sprache der zuletzt eingegangenen Mail.\n\n";
+        "Analyze the following email thread. Identify the MOST RECENT incoming message " +
+        "as well as its sender and context (e.g. private, business, boss, colleague, customer, partner, friend).\n\n" +
+        "YOUR ROLE: You are the recipient of the most recent message. Compose an appropriate reply on their behalf.\n\n" +
+        "OUTPUT RULES:\n" +
+        "- Output ONLY the plain reply text – no introduction, no Markdown, no metadata.\n" +
+        "- The reply MUST follow this structure:\n" +
+        "  1. Greeting (e.g. 'Dear Mr/Ms ...', 'Hi ...', 'Hello ...' – matching the context and tone of the email)\n" +
+        "  2. Body of the reply (address all points raised)\n" +
+        "  3. Closing with name (e.g. 'Best regards', 'Kind regards', 'Cheers' – matching the context)\n" +
+        "- Tone and style adapt automatically to the context.\n" +
+        "- Language: use the language of the most recent incoming email.\n\n";
     }
 
     if (hints) {
-        prompt += "ZUSÄTZLICHE HINWEISE VOM BENUTZER:\n" + hints + "\n\n";
+        prompt += "ADDITIONAL HINTS FROM USER:\n" + hints + "\n\n";
     }
 
     prompt +=
-        "MAIL-VERLAUF:\n" +
-        "Betreff: " + item.subject + "\n" +
-        "Inhalt: " + bodyText;
+        "EMAIL THREAD:\n" +
+        "Subject: " + item.subject + "\n" +
+        "Content: " + bodyText;
 
-    // 3. Neue Konversation erstellen
-    statusText.innerText = "Verbinde mit BLOCKBRAIN...";
+    // 3. Create new conversation
+    statusText.innerText = "Connecting to BLOCKBRAIN...";
     var convoData = await createConvo(settings.bbUrl, settings.bbToken, settings.bbBotId, item.subject);
     var convoId = convoData.body.dataRoomId;
 
-    // 4. Prompt senden
-    statusText.innerText = "Bot schreibt Antwort...";
+    // 4. Send prompt
+    statusText.innerText = "Bot is writing reply...";
     var answer = await sendUserInput(settings.bbUrl, settings.bbToken, convoId, prompt);
 
     if (answer && answer.body && answer.body.content) {
       var draftContent = answer.body.content;
       lastDraftHtml = draftContent.replace(/\n/g, "<br>");
 
-      // 5. Draft im Sidebar anzeigen
+      // 5. Show draft in sidebar
       draftTextEl.value = draftContent;
       resultEl.classList.remove("hidden");
 
       spinnerEl.className = "spinner done";
-      statusText.innerText = "✅ Antwort generiert!";
+      statusText.innerText = "✅ Reply generated!";
     } else {
       spinnerEl.className = "spinner done";
-      statusText.innerText = "❌ Keine Antwort vom Bot erhalten.";
+      statusText.innerText = "❌ No response received from bot.";
     }
   } catch (error) {
     console.error("BlockBrain Error:", error);
     spinnerEl.className = "spinner done";
-    statusText.innerText = "❌ Fehler: " + error.message;
+    statusText.innerText = "❌ Error: " + error.message;
   }
 
-  // UI zurücksetzen
+  // Reset UI
   btnGenerate.disabled = false;
   btnIcon.innerText = "✨";
-  btnText.innerText = "Antwort generieren";
+  btnText.innerText = "Generate reply";
 }
 
-// --- REPLY ÖFFNEN (mit Retry-Logik) ---
+// --- OPEN REPLY (with retry logic) ---
 function tryOpenReply() {
   if (!lastDraftHtml) return;
 
@@ -210,7 +210,7 @@ function tryOpenReply() {
         function (asyncResult) {
           if (asyncResult.status === Office.AsyncResultStatus.Failed) {
             console.warn("displayReplyAllFormAsync failed:", asyncResult.error);
-            // Fallback: Altes API
+            // Fallback: old API
             try { item.displayReplyAllForm(lastDraftHtml); } catch (e) {
               console.warn("displayReplyAllForm fallback failed:", e);
             }
@@ -218,39 +218,39 @@ function tryOpenReply() {
         }
       );
     } else {
-      // Fallback: Altes API
+      // Fallback: old API
       item.displayReplyAllForm(lastDraftHtml);
     }
   } catch (e) {
     console.warn("Reply open failed:", e);
-    // Draft ist im Sidebar sichtbar → User kann manuell kopieren
+    // Draft is visible in sidebar → user can copy manually
   }
 }
 
-// --- MANUELL REPLY ÖFFNEN ---
+// --- MANUALLY OPEN REPLY ---
 function handleOpenReply() {
   tryOpenReply();
 }
 
-// --- IN ZWISCHENABLAGE KOPIEREN ---
+// --- COPY TO CLIPBOARD ---
 async function handleCopy() {
   var draftTextEl = document.getElementById("draft-text");
   var copyTextEl = document.getElementById("copy-text");
   try {
     await navigator.clipboard.writeText(draftTextEl.value);
-    copyTextEl.innerText = "✅ Kopiert!";
+    copyTextEl.innerText = "✅ Copied!";
   } catch (e) {
     // Fallback: select + execCommand
     draftTextEl.select();
     document.execCommand("copy");
-    copyTextEl.innerText = "✅ Kopiert!";
+    copyTextEl.innerText = "✅ Copied!";
   }
   setTimeout(function () {
-    copyTextEl.innerText = "Kopieren";
+    copyTextEl.innerText = "Copy";
   }, 2000);
 }
 
-// --- HILFSFUNKTIONEN ---
+// --- HELPER FUNCTIONS ---
 
 function getMailBody(item) {
   return new Promise(function (resolve, reject) {

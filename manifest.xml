@@ -9,9 +9,9 @@
   <Id>a1b2c3d4-e5f6-7890-abcd-ef1234567890</Id>
   <Version>1.5.0.0</Version>
   <ProviderName>BLOCKBRAIN</ProviderName>
-  <DefaultLocale>de-DE</DefaultLocale>
+  <DefaultLocale>en-US</DefaultLocale>
   <DisplayName DefaultValue="BLOCKBRAIN" />
-  <Description DefaultValue="Generiere professionelle E-Mail-Antworten auf Knopfdruck – powered by BLOCKBRAIN." />
+  <Description DefaultValue="Generate professional email replies at the click of a button – powered by BLOCKBRAIN." />
   <IconUrl DefaultValue="https://ebbonaut.github.io/bb-outlook-plugin/assets/icon-64.png" />
   <HighResolutionIconUrl DefaultValue="https://ebbonaut.github.io/bb-outlook-plugin/assets/icon-128.png" />
   <SupportUrl DefaultValue="https://blockbrain.ai" />
@@ -104,7 +104,7 @@
       </bt:ShortStrings>
 
       <bt:LongStrings>
-        <bt:String id="ButtonTooltip" DefaultValue="KI-generierte E-Mail-Antwort mit BLOCKBRAIN erstellen" />
+        <bt:String id="ButtonTooltip" DefaultValue="Generate AI-powered email replies with BLOCKBRAIN" />
       </bt:LongStrings>
     </Resources>
 

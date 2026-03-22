@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -17,31 +17,31 @@
 
     <!-- ========== DRAFT SECTION ========== -->
     <section class="section draft-section">
-      <label class="label" for="hints">Zusätzliche Hinweise <span class="optional">(optional)</span></label>
+      <label class="label" for="hints">Additional hints <span class="optional">(optional)</span></label>
       <textarea id="hints" class="textarea" rows="5"
-        placeholder="z.B. &quot;Antworte freundlich aber bestimmt&quot; oder &quot;Frage nach der Bestellnummer&quot;"></textarea>
+        placeholder="e.g. &quot;Reply friendly but firm&quot; or &quot;Ask for the order number&quot;"></textarea>
 
       <button id="btn-generate" class="btn btn-primary">
         <span id="btn-icon">✨</span>
-        <span id="btn-text">Antwort generieren</span>
+        <span id="btn-text">Generate reply</span>
       </button>
 
       <!-- Status-Anzeige (versteckt bis Klick) -->
       <div id="status" class="status hidden">
         <div class="spinner" id="spinner"></div>
-        <p id="status-text">Generiere Antwort...</p>
+        <p id="status-text">Generating reply...</p>
       </div>
 
       <!-- Ergebnis-Bereich (versteckt bis Antwort da) -->
       <div id="result" class="result-section hidden">
-        <label class="label">Generierter Entwurf</label>
+        <label class="label">Generated draft</label>
         <textarea id="draft-text" class="textarea draft-textarea" rows="8" readonly></textarea>
         <div class="result-actions">
           <button id="btn-open-reply" class="btn btn-primary">
-            <span>📧</span> <span>Reply öffnen</span>
+            <span>📧</span> <span>Open reply</span>
           </button>
           <button id="btn-copy" class="btn btn-secondary">
-            <span>📋</span> <span id="copy-text">Kopieren</span>
+            <span>📋</span> <span id="copy-text">Copy</span>
           </button>
         </div>
       </div>
@@ -50,7 +50,7 @@
     <!-- ========== SETTINGS SECTION ========== -->
     <details class="section settings-section" id="settings-details">
       <summary class="settings-toggle">
-        <span class="settings-icon">⚙️</span> Einstellungen
+        <span class="settings-icon">⚙️</span> Settings
       </summary>
 
       <div class="settings-body">
@@ -61,27 +61,27 @@
 
         <div class="field">
           <label class="label" for="cfg-token">Bearer Token</label>
-          <input id="cfg-token" class="input" type="password" placeholder="Token eingeben..." />
+          <input id="cfg-token" class="input" type="password" placeholder="Enter token..." />
         </div>
 
         <div class="field">
           <label class="label" for="cfg-bot">Bot ID</label>
-          <input id="cfg-bot" class="input" type="text" placeholder="Bot ID eingeben..." />
+          <input id="cfg-bot" class="input" type="text" placeholder="Enter Bot ID..." />
         </div>
 
         <div class="field">
           <label class="checkbox-row" for="cfg-system-prompt">
             <input id="cfg-system-prompt" type="checkbox" checked />
-            <span class="label">System-Prompt mitsenden</span>
+            <span class="label">Include system prompt</span>
           </label>
-          <span class="checkbox-hint">Deaktivieren, wenn der Bot bereits eigene Anweisungen (Initial Instructions) hat.</span>
+          <span class="checkbox-hint">Disable if the bot already has its own instructions (Initial Instructions).</span>
         </div>
 
         <button id="btn-save" class="btn btn-secondary">
-          💾 Einstellungen speichern
+          💾 Save settings
         </button>
 
-        <p id="save-status" class="save-status hidden">✅ Gespeichert</p>
+        <p id="save-status" class="save-status hidden">✅ Saved</p>
       </div>
     </details>
 

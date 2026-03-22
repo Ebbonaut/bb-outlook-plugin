@@ -1,100 +1,95 @@
-# BB Outlook Plugin – BlockBrain AI Draft
+# BLOCKBRAIN Outlook Plugin
 
-Outlook Add-in, das per Klick eine KI-generierte E-Mail-Antwort über die BlockBrain API erstellt.
+Outlook Add-in that generates AI-powered email replies via the BlockBrain API at the click of a button.
 
-## 🏗 Projekt-Struktur
+## 🏗 Project Structure
 
 ```
 bb-outlook-plugin/
-├── manifest.xml              ← Outlook Add-in Manifest
+├── manifest.xml              ← Outlook Add-in manifest
 ├── src/
 │   └── taskpane/
 │       ├── taskpane.html     ← Taskpane UI
 │       ├── taskpane.css      ← Styling
-│       └── taskpane.js       ← Logik (API-Aufrufe)
-├── assets/                   ← Icons (16/32/64/80/128px)
-├── .env                      ← API-Konfiguration (nicht committen!)
-├── webpack.config.js         ← Build-Konfiguration
+│       └── taskpane.js       ← Logic (API calls)
+├── assets/                   ← Icons (16/32/64/80/128px) & logos
+├── webpack.config.js         ← Build configuration
 └── package.json
 ```
 
 ## 🚀 Setup
 
-### 1. Abhängigkeiten installieren
+### 1. Install dependencies
 
 ```bash
 npm install
 ```
 
-### 2. API-Token konfigurieren
-
-Bearbeite die `.env` Datei:
-
-```env
-BB_BASE_URL=https://blocky.qa.theblockbrain.io
-BB_BEARER_TOKEN=DEIN_ECHTER_TOKEN
-BB_GENERAL_BOT_ID=69b7e7e7d54d83a12f86a13b
-```
-
-### 3. Dev-Server starten
+### 2. Start dev server
 
 ```bash
 npm run dev
 ```
 
-Der Server startet auf `https://localhost:3000` mit HTTPS (erforderlich für Outlook).
+The server starts on `https://localhost:3000` with HTTPS (required by Outlook).
 
-### 4. Add-in in Outlook laden (Sideloading)
+### 3. Configure the plugin
 
-#### Option A: Outlook im Web (am einfachsten)
+API URL, Bearer Token, and Bot ID are configured directly in the plugin's **Settings** panel — no `.env` file needed. Settings are persisted in `localStorage`.
 
-1. Öffne [Outlook Web](https://outlook.office.com)
-2. Öffne eine beliebige E-Mail
-3. Klicke auf **⋯** (Weitere Aktionen) → **Add-ins abrufen**
-4. Klicke auf **Meine Add-Ins** → **Benutzerdefinierte Add-ins hinzufügen** → **Aus Datei hinzufügen**
-5. Wähle die `manifest.xml` aus diesem Projekt
+### 4. Load add-in in Outlook (Sideloading)
+
+#### Option A: Outlook on the Web (easiest)
+
+1. Open [Outlook Web](https://outlook.office.com)
+2. Open any email
+3. Click **⋯** (More actions) → **Get Add-ins**
+4. Click **My add-ins** → **Add a custom add-in** → **Add from file**
+5. Select the `manifest.xml` from this project
 
 #### Option B: Outlook Desktop (Windows)
 
-1. Öffne Outlook
-2. Gehe zu **Datei** → **Add-Ins verwalten** (oder **Get Add-Ins**)
-3. Klicke auf **Meine Add-Ins** → **Benutzerdefiniertes Add-In hinzufügen** → **Aus Datei hinzufügen**
-4. Wähle die `manifest.xml`
+1. Open Outlook
+2. Go to **File** → **Manage Add-ins** (or **Get Add-ins**)
+3. Click **My add-ins** → **Add a custom add-in** → **Add from file**
+4. Select the `manifest.xml`
 
 #### Option C: Microsoft 365 Admin Center
 
-1. Gehe zu [admin.microsoft.com](https://admin.microsoft.com)
-2. **Einstellungen** → **Integrierte Apps** → **Benutzerdefinierte Apps hochladen**
-3. Lade die `manifest.xml` hoch
+1. Go to [admin.microsoft.com](https://admin.microsoft.com)
+2. **Settings** → **Integrated Apps** → **Upload Custom Apps**
+3. Upload the `manifest.xml`
 
-### 5. Verwenden
+### 5. Usage
 
-1. Öffne eine E-Mail in Outlook
-2. Klicke auf das **BB Draft** Icon im Header/Ribbon
-3. Klicke **Antwort generieren** → Die KI erstellt einen Entwurf
-4. Klicke **Entwurf öffnen** → Antwort wird in "Allen antworten" eingefügt
+1. Open an email in Outlook
+2. Click the **BLOCKBRAIN** icon in the header/ribbon
+3. Optionally enter additional hints (e.g. "Reply friendly but firm")
+4. Click **Generate reply** → The AI creates a draft
+5. Copy the draft or click **Open reply** to insert it into a Reply All form
 
-## 🔧 Befehle
+## 🔧 Commands
 
-| Befehl | Beschreibung |
-|--------|-------------|
-| `npm run dev` | Dev-Server mit Hot Reload starten |
-| `npm run build` | Produktions-Build erstellen |
-| `npm run validate` | Manifest validieren |
+| Command | Description |
+|---------|-------------|
+| `npm run dev` | Start dev server with hot reload |
+| `npm run build` | Create production build |
 
-## 📦 Produktion / Deployment
+## 📦 Production / Deployment
 
-Für den produktiven Einsatz:
+This project is deployed automatically via **GitHub Actions** to **GitHub Pages** on every push to `main`.
 
-1. Ersetze `https://localhost:3000` in der `manifest.xml` durch deine gehostete URL
-2. Erstelle echte PNG-Icons (ersetze die Platzhalter in `assets/`)
-3. Ändere die Add-in ID in der `manifest.xml` (neue GUID generieren)
-4. Baue das Projekt: `npm run build`
-5. Deploye den `dist/` Ordner auf einen Webserver mit HTTPS
-6. Lade die aktualisierte `manifest.xml` im Microsoft 365 Admin Center hoch
+Live URL: `https://ebbonaut.github.io/bb-outlook-plugin/`
 
-## ⚠️ Hinweise
+For a custom deployment:
 
-- **HTTPS erforderlich**: Outlook Add-ins funktionieren nur über HTTPS
-- **Token-Sicherheit**: Der Bearer Token steht aktuell im Frontend-Code. Für Produktion sollte ein Backend-Proxy verwendet werden
-- **Icons**: Die generierten Icons sind SVG-Platzhalter. Für Produktion echte PNGs erstellen
+1. Replace all URLs in `manifest.xml` with your hosted URL
+2. Run `npm run build`
+3. Deploy the `dist/` folder to a web server with HTTPS
+4. Upload the updated `manifest.xml` in the Microsoft 365 Admin Center
+
+## ⚠️ Notes
+
+- **HTTPS required**: Outlook Add-ins only work over HTTPS
+- **Token security**: The Bearer Token is stored in `localStorage` on the client. For production, consider using a backend proxy
+- **System prompt**: Can be toggled on/off in Settings. Disable it if the bot already has its own Initial Instructions configured
