@@ -10,7 +10,6 @@ module.exports = async (env, options) => {
     devtool: dev ? "source-map" : false,
     entry: {
       taskpane: "./src/taskpane/taskpane.js",
-      commands: "./src/commands/commands.js",
     },
     output: {
       path: path.resolve(__dirname, "dist"),
@@ -43,11 +42,6 @@ module.exports = async (env, options) => {
         filename: "taskpane.html",
         template: "./src/taskpane/taskpane.html",
         chunks: ["taskpane"],
-      }),
-      new HtmlWebpackPlugin({
-        filename: "commands.html",
-        template: "./src/commands/commands.html",
-        chunks: ["commands"],
       }),
       new CopyWebpackPlugin({
         patterns: [
