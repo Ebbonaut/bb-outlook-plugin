@@ -253,15 +253,18 @@ details[open] .settings-toggle::after {
 
 .checkbox-row {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   gap: 8px;
   cursor: pointer;
+}
+
+.checkbox-row .label {
+  margin-bottom: 0;
 }
 
 .checkbox-row input[type="checkbox"] {
   width: 16px;
   height: 16px;
-  margin-top: 1px;
   accent-color: #0078d4;
   cursor: pointer;
   flex-shrink: 0;
@@ -272,6 +275,7 @@ details[open] .settings-toggle::after {
   color: #a19f9d;
   user-select: none;
   line-height: 1.4;
+  margin-top: 2px;
 }
 
 .save-status {
