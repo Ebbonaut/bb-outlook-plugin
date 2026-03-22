@@ -251,6 +251,42 @@ details[open] .settings-toggle::after {
   flex-direction: column;
 }
 
+.field-toggle {
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 0;
+}
+
+.toggle-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+  color: #323130;
+}
+
+.toggle-label input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  accent-color: #0078d4;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.toggle-text {
+  user-select: none;
+}
+
+.toggle-hint {
+  display: block;
+  font-size: 11px;
+  color: #a19f9d;
+  margin-top: 4px;
+  padding-left: 24px;
+}
+
 .save-status {
   text-align: center;
   font-size: 12px;

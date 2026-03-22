@@ -4,9 +4,10 @@ import "./taskpane.css";
 
 // --- DEFAULTS (Fallback wenn nichts in localStorage) ---
 var DEFAULTS = {
-  bbUrl: "https://blocky.qa.theblockbrain.io",
+  bbUrl: "https://blocky.theblockbrain.ai",
   bbToken: "",
   bbBotId: "",
+  useSystemPrompt: false,
 };
 
 // --- SETTINGS aus localStorage laden ---
@@ -19,6 +20,7 @@ function loadSettings() {
         bbUrl: parsed.bbUrl || DEFAULTS.bbUrl,
         bbToken: parsed.bbToken || DEFAULTS.bbToken,
         bbBotId: parsed.bbBotId || DEFAULTS.bbBotId,
+        useSystemPrompt: parsed.useSystemPrompt !== undefined ? parsed.useSystemPrompt : DEFAULTS.useSystemPrompt,
       };
     }
   } catch (e) {
@@ -28,14 +30,16 @@ function loadSettings() {
     bbUrl: DEFAULTS.bbUrl,
     bbToken: DEFAULTS.bbToken,
     bbBotId: DEFAULTS.bbBotId,
+    useSystemPrompt: DEFAULTS.useSystemPrompt,
   };
 }
 
-function saveSettings(url, token, botId) {
+function saveSettings(url, token, botId, useSystemPrompt) {
   var settings = {
     bbUrl: url,
     bbToken: token,
     bbBotId: botId,
+    useSystemPrompt: useSystemPrompt,
   };
   localStorage.setItem("bb_settings", JSON.stringify(settings));
 }
@@ -53,6 +57,7 @@ function initUI() {
   document.getElementById("cfg-url").value = settings.bbUrl;
   document.getElementById("cfg-token").value = settings.bbToken;
   document.getElementById("cfg-bot").value = settings.bbBotId;
+  document.getElementById("cfg-system-prompt").checked = settings.useSystemPrompt;
 
   // Wenn Token oder Bot ID leer → Settings automatisch öffnen
   if (!settings.bbToken || !settings.bbBotId) {
@@ -71,8 +76,9 @@ function handleSave() {
   var url = document.getElementById("cfg-url").value.trim();
   var token = document.getElementById("cfg-token").value.trim();
   var botId = document.getElementById("cfg-bot").value.trim();
+  var useSystemPrompt = document.getElementById("cfg-system-prompt").checked;
 
-  saveSettings(url, token, botId);
+  saveSettings(url, token, botId, useSystemPrompt);
 
   // Kurz "Gespeichert" anzeigen
   var statusEl = document.getElementById("save-status");
@@ -130,31 +136,35 @@ async function handleGenerate() {
     statusText.innerText = "KI generiert Antwort...";
 
     // 2. Prompt bauen
-    var prompt =
-  "Analysiere den folgenden E-Mail-Verlauf. Identifiziere die ZULETZT eingegangene Nachricht " +
-  "sowie deren Absender und Kontext (z.B. privat, geschäftlich, Chef, Kollege, Kunde, Partner, Freund).\n\n" +
-  "DEINE ROLLE: Du bist der Empfänger der letzten Nachricht. Verfasse eine passende Antwort in seinem Namen.\n\n" +
-  "AUSGABE-REGELN:\n" +
-  "- NUR den reinen Antworttext ausgeben – keine Einleitung, kein Markdown, keine Metadaten.\n" +
-  "- Die Antwort MUSS folgende Struktur haben:\n" +
-  "  1. Anrede (z.B. 'Sehr geehrter Herr/Frau ...', 'Lieber ...', 'Hallo ...', 'Hi ...' – passend zum Kontext und Tonalität der E-Mail)\n" +
-  "  2. Inhalt der Antwort (auf alle angesprochenen Punkte eingehen)\n" +
-  "  3. Grußformel mit Name (z.B. 'Mit freundlichen Grüßen', 'Beste Grüße', 'Viele Grüße' – passend zum Kontext)\n" +
-  "- Ton und Stil passen sich automatisch dem Kontext an.\n" +
-  "- Sprache: die Sprache der zuletzt eingegangenen Mail.\n\n";
+    var prompt = "";
 
-if (hints) {
-  prompt += "ZUSÄTZLICHE HINWEISE VOM BENUTZER:\n" + hints + "\n\n";
-}
+    if (settings.useSystemPrompt) {
+      prompt +=
+        "Analysiere den folgenden E-Mail-Verlauf. Identifiziere die ZULETZT eingegangene Nachricht " +
+        "sowie deren Absender und Kontext (z.B. privat, geschäftlich, Chef, Kollege, Kunde, Partner, Freund).\n\n" +
+        "DEINE ROLLE: Du bist der Empfänger der letzten Nachricht. Verfasse eine passende Antwort in seinem Namen.\n\n" +
+        "AUSGABE-REGELN:\n" +
+        "- NUR den reinen Antworttext ausgeben – keine Einleitung, kein Markdown, keine Metadaten.\n" +
+        "- Die Antwort MUSS folgende Struktur haben:\n" +
+        "  1. Anrede (z.B. 'Sehr geehrter Herr/Frau ...', 'Lieber ...', 'Hallo ...', 'Hi ...' – passend zum Kontext und Tonalität der E-Mail)\n" +
+        "  2. Inhalt der Antwort (auf alle angesprochenen Punkte eingehen)\n" +
+        "  3. Grußformel mit Name (z.B. 'Mit freundlichen Grüßen', 'Beste Grüße', 'Viele Grüße' – passend zum Kontext)\n" +
+        "- Ton und Stil passen sich automatisch dem Kontext an.\n" +
+        "- Sprache: die Sprache der zuletzt eingegangenen Mail.\n\n";
+    }
 
-prompt +=
-  "MAIL-VERLAUF:\n" +
-  "Betreff: " + item.subject + "\n" +
-  "Inhalt: " + bodyText;
+    if (hints) {
+        prompt += "ZUSÄTZLICHE HINWEISE VOM BENUTZER:\n" + hints + "\n\n";
+    }
+
+    prompt +=
+        "MAIL-VERLAUF:\n" +
+        "Betreff: " + item.subject + "\n" +
+        "Inhalt: " + bodyText;
 
     // 3. Neue Konversation erstellen
     statusText.innerText = "Verbinde mit BLOCKBRAIN...";
-    var convoData = await createConvo(settings.bbUrl, settings.bbToken, settings.bbBotId);
+    var convoData = await createConvo(settings.bbUrl, settings.bbToken, settings.bbBotId, item.subject);
     var convoId = convoData.body.dataRoomId;
 
     // 4. Prompt senden
@@ -254,8 +264,7 @@ function getMailBody(item) {
   });
 }
 
-async function createConvo(baseUrl, token, botId) {
-  var formattedDate = new Date().toISOString().replace("T", " ").split(".")[0];
+async function createConvo(baseUrl, token, botId, convoName = "Outlook Plugin Conversation") {
   var response = await fetch(baseUrl + "/cortex/active-bot/" + botId + "/convo", {
     method: "POST",
     headers: {
@@ -263,7 +272,7 @@ async function createConvo(baseUrl, token, botId) {
       Accept: "application/json",
       Authorization: "Bearer " + token,
     },
-    body: JSON.stringify({ convoName: formattedDate }),
+    body: JSON.stringify({ convoName }),
   });
 
   if (!response.ok) {

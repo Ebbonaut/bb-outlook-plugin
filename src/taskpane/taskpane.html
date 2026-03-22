@@ -56,7 +56,7 @@
       <div class="settings-body">
         <div class="field">
           <label class="label" for="cfg-url">API URL</label>
-          <input id="cfg-url" class="input" type="url" placeholder="https://blocky.qa.theblockbrain.io" />
+          <input id="cfg-url" class="input" type="url" placeholder="https://blocky.theblockbrain.ai" />
         </div>
 
         <div class="field">
@@ -67,6 +67,14 @@
         <div class="field">
           <label class="label" for="cfg-bot">Bot ID</label>
           <input id="cfg-bot" class="input" type="text" placeholder="Bot ID eingeben..." />
+        </div>
+
+        <div class="field field-toggle">
+          <label class="toggle-label">
+            <input id="cfg-system-prompt" type="checkbox" checked />
+            <span class="toggle-text">System-Prompt mitsenden</span>
+          </label>
+          <span class="toggle-hint">Deaktivieren, wenn der Bot bereits eigene Anweisungen (Initial Instructions) hat.</span>
         </div>
 
         <button id="btn-save" class="btn btn-secondary">
