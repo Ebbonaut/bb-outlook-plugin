@@ -133,7 +133,7 @@ async function handleGenerate() {
 
     // 1. Mail-Body lesen
     var bodyText = await getMailBody(item);
-    statusText.innerText = "KI generiert Antwort...";
+    statusText.innerText = "Bot generiert Antwort...";
 
     // 2. Prompt bauen
     var prompt = "";
@@ -168,7 +168,7 @@ async function handleGenerate() {
     var convoId = convoData.body.dataRoomId;
 
     // 4. Prompt senden
-    statusText.innerText = "KI schreibt Antwort...";
+    statusText.innerText = "Bot schreibt Antwort...";
     var answer = await sendUserInput(settings.bbUrl, settings.bbToken, convoId, prompt);
 
     if (answer && answer.body && answer.body.content) {
@@ -183,7 +183,7 @@ async function handleGenerate() {
       statusText.innerText = "✅ Antwort generiert!";
     } else {
       spinnerEl.className = "spinner done";
-      statusText.innerText = "❌ Keine Antwort von der KI erhalten.";
+      statusText.innerText = "❌ Keine Antwort vom Bot erhalten.";
     }
   } catch (error) {
     console.error("BlockBrain Error:", error);
