@@ -5,7 +5,7 @@ Outlook Add-in that generates AI-powered email replies via the BlockBrain API at
 ## 🏗 Project Structure
 
 ```
-bb-outlook-plugin/
+ms-outlook-addin/
 ├── manifest.xml              ← Outlook Add-in manifest
 ├── src/
 │   └── taskpane/
@@ -79,7 +79,7 @@ API URL, Bearer Token, and Bot ID are configured directly in the plugin's **Sett
 
 This project is deployed automatically via **GitHub Actions** to **GitHub Pages** on every push to `main`.
 
-Live URL: `https://ebbonaut.github.io/bb-outlook-plugin/`
+Live URL: `https://theblockbrain.github.io/ms-outlook-addin/`
 
 For a custom deployment:
 

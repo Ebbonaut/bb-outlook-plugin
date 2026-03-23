@@ -1,5 +1,5 @@
 {
-  "name": "bb-outlook-plugin",
+  "name": "ms-outlook-addin",
   "version": "1.0.0",
   "description": "BlockBrain AI Email Draft Outlook Add-in",
   "private": true,
